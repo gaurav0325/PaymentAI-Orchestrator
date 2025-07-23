@@ -1,0 +1,4 @@
+[
+  {"scenario": "high_risk", "fallback": "Offer phone support or wallet switch"},
+  {"scenario": "device_not_supported", "fallback": "Suggest using desktop site or alternative payment method"}
+] 

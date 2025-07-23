@@ -1,0 +1,4 @@
+[
+  {"user_id": "5678", "flag_type": "payment_failure", "details": "Multiple failed payments in last 30 days"},
+  {"user_id": "9012", "flag_type": "location_mismatch", "details": "Login from unusual location"}
+] 

@@ -1,0 +1,5 @@
+[
+  {"user_id": "1234", "timestamp": "2024-06-01T10:00:00Z", "action": "payment_success", "details": "Apple Pay, £150"},
+  {"user_id": "5678", "timestamp": "2024-06-02T12:30:00Z", "action": "payment_failure", "details": "Credit Card, $80"},
+  {"user_id": "9012", "timestamp": "2024-06-03T09:15:00Z", "action": "payment_success", "details": "UPI, ₹50"}
+] 

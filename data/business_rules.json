@@ -1,0 +1,14 @@
+[
+  {
+    "id": "no_payment_pakistan",
+    "description": "No payment methods for flights starting from Pakistan",
+    "type": "block_payment",
+    "condition": {
+      "flight_from_country": "Pakistan"
+    },
+    "action": {
+      "block": true,
+      "message": "No payment methods allowed for flights starting from Pakistan."
+    }
+  }
+] 

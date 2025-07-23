@@ -1,0 +1,7 @@
+langchain
+langgraph
+openai
+streamlit
+pydantic
+pandas
+boto3 

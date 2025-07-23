@@ -1,0 +1,43 @@
+[
+  {
+    "user_id": "1234",
+    "device": "iPhone 13",
+    "location": "UK",
+    "loyalty_status": "Gold",
+    "payment_history": [
+      {"amount": 200, "method": "Credit Card", "success": true},
+      {"amount": 150, "method": "Apple Pay", "success": true}
+    ]
+  },
+  {
+    "user_id": "5678",
+    "device": "Android Pixel 6",
+    "location": "US",
+    "loyalty_status": "Silver",
+    "payment_history": [
+      {"amount": 100, "method": "Google Pay", "success": true},
+      {"amount": 80, "method": "Credit Card", "success": false}
+    ]
+  },
+  {
+    "user_id": "9012",
+    "device": "Windows Laptop",
+    "location": "IN",
+    "loyalty_status": "None",
+    "payment_history": [
+      {"amount": 50, "method": "UPI", "success": true}
+    ]
+  },
+  {
+    "user_id": "PK001",
+    "device": "Android Tablet",
+    "location": "Pakistan",
+    "loyalty_status": "None",
+    "payment_history": [],
+    "flight": {
+      "from": "Karachi Airport",
+      "to": "Dubai Airport"
+    },
+    "note": "No payment method should be activated for flights starting from Pakistan."
+  }
+] 

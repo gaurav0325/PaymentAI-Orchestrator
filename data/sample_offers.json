@@ -1,0 +1,6 @@
+[
+  {"offer_id": "OFFER1", "loyalty_status": "Gold", "location": "UK", "description": "10% off next flight"},
+  {"offer_id": "OFFER2", "loyalty_status": "Silver", "location": "US", "description": "5% cashback on credit card payments"},
+  {"offer_id": "OFFER3", "loyalty_status": "None", "location": "IN", "description": "No convenience fee on UPI payments"},
+  {"offer_id": "OFFER4", "loyalty_status": "Gold", "location": "IN", "description": "Free lounge access at select airports"}
+] 

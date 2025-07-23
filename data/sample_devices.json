@@ -1,0 +1,5 @@
+[
+  {"device": "iPhone 13", "os": "iOS 15", "capabilities": ["Apple Pay", "Face ID", "3DS"]},
+  {"device": "Android Pixel 6", "os": "Android 12", "capabilities": ["Google Pay", "Fingerprint", "3DS"]},
+  {"device": "Windows Laptop", "os": "Windows 11", "capabilities": ["Credit Card", "3DS Redirect"]}
+] 
