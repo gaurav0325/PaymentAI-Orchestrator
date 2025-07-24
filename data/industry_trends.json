@@ -1,0 +1,26 @@
+{
+  "India": {
+    "demographics": {
+      "18-25": ["UPI", "Paytm", "Credit Card"],
+      "26-40": ["UPI", "Credit Card", "Net Banking"],
+      "41-60": ["Credit Card", "Net Banking", "UPI"]
+    },
+    "trending": ["UPI", "Paytm"]
+  },
+  "USA": {
+    "demographics": {
+      "18-25": ["Apple Pay", "Credit Card", "PayPal"],
+      "26-40": ["Credit Card", "Apple Pay", "PayPal"],
+      "41-60": ["Credit Card", "PayPal"]
+    },
+    "trending": ["Apple Pay", "Credit Card"]
+  },
+  "Europe": {
+    "demographics": {
+      "18-25": ["SEPA", "Credit Card", "PayPal"],
+      "26-40": ["Credit Card", "SEPA", "PayPal"],
+      "41-60": ["Credit Card", "SEPA"]
+    },
+    "trending": ["SEPA", "Credit Card"]
+  }
+} 
