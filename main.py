@@ -31,7 +31,7 @@ st.set_page_config(page_title="PaymentAI-Orchestrator Demo", layout="wide")
 # --- Sidebar Navigation ---
 page = st.sidebar.radio(
     "Navigation",
-    ["Home", "Project Summary", "Application Log", "Admin UI (Business Rules)"]
+    ["Home", "Project Summary", "Sample Data", "Application Log", "Admin UI (Business Rules)"]
 )
 
 # Use a placeholder admin subdomain for the admin UI
@@ -159,32 +159,56 @@ graph TD
             st.info(f"UX Message: {result.context['ux_message']}")
         st.subheader("Agent Sequence Diagram")
         render_sequence_diagram(steps)
+elif page == "Sample Data":
+    st.title("Sample Data Used by Each Agent")
+    def load_json_file(filename):
+        with open(os.path.join(data_dir, filename), 'r', encoding='utf-8') as f:
+            return json.load(f)
+    st.header("User Context (Context Agent)")
+    st.json(load_json_file('sample_users.json'))
+    st.header("Payment Preferences & Business Rules (Preference Agent)")
+    st.subheader("Business Rules")
+    st.json(load_json_file('business_rules.json'))
+    st.subheader("Industry Trends")
+    st.json(load_json_file('industry_trends.json'))
+    st.header("Risk Flags (Risk Agent)")
+    st.json(load_json_file('sample_risk_flags.json'))
+    st.header("Loyalty Offers (Loyalty Agent)")
+    st.json(load_json_file('sample_offers.json'))
+    st.header("Device Data (Device Optimizer Agent)")
+    st.json(load_json_file('sample_devices.json'))
+    st.header("Analytics Logs (Analytics Logger Agent)")
+    st.json(load_json_file('sample_analytics_logs.json'))
+    st.header("Fallbacks (Fallback Agent)")
+    st.json(load_json_file('sample_fallbacks.json'))
+    st.info("All agents and the orchestrator now use Anthropic Claude LLM for decision-making, with industry learning and dynamic reasoning.")
 elif page == "Project Summary":
     st.title("Project Summary")
     st.markdown('''
 **PaymentAI-Orchestrator**
 
 - **Objective:** Enable real-time personalization of payment journeys for airline customers using a multi-agent AI system.
-- **Orchestrator:** LLM-based agent (LangGraph) that routes, aggregates, and manages agent workflows.
+- **Orchestrator:** LLM-based agent (LangGraph + Anthropic Claude) that routes, aggregates, and manages agent workflows, using industry trends and dynamic planning.
 - **Agents:**
-    - Context Agent: Gathers user/session context
-    - Preference Agent: Personalizes payment methods
-    - Risk Agent: Assesses risk
-    - Loyalty Agent: Checks loyalty offers
-    - Device Optimizer: Suggests device-based payment options
-    - Analytics Logger: Logs decisions
-    - Fallback Agent: Handles fallback/alternative flows
-    - UX Personalizer: Customizes frontend messaging
+    - Context Agent: Gathers and infers user/session context using LLM and industry data
+    - Preference Agent: Personalizes payment methods using LLM, business rules, and industry trends
+    - Risk Agent: Assesses risk using LLM and industry fraud patterns
+    - Loyalty Agent: Checks loyalty offers using LLM and industry campaign logic
+    - Device Optimizer: Suggests device-based payment options using LLM and industry adoption
+    - Analytics Logger: Summarizes analytics using LLM
+    - Fallback Agent: Handles fallback/alternative flows using LLM and industry best practices
+    - UX Personalizer: Customizes frontend messaging using LLM and industry tone
 - **Business Rules:** Dynamic, admin-editable rules for compliance and custom logic
+- **Industry Learning:** All agents and the orchestrator use payment preference data by geography and demography, and other industry trends, in their LLM prompts.
 - **Frontend:** Streamlit UI for both user journey and admin management
-- **Data:** Sample users, offers, risk flags, devices, business rules, etc.
+- **Data:** Sample users, offers, risk flags, devices, business rules, industry trends, etc.
 - **Workflow:**
     1. User lands on payment page
-    2. Orchestrator collects context, routes to agents
-    3. Agents enrich context and personalize journey
-    4. Business rules are applied dynamically
+    2. Orchestrator (LLM) collects context, plans agent sequence, routes to agents
+    3. Agents (LLMs) enrich context and personalize journey using industry learning
+    4. Business rules and industry trends are applied dynamically
     5. Final decision and options are shown to the user
-- **Tech Stack:** Python, LangChain, LangGraph, Streamlit, Pydantic, JSON
+- **Tech Stack:** Python, LangChain, LangGraph, Anthropic Claude, Streamlit, Pydantic, JSON
     ''')
 elif page == "Application Log":
     st.title("Application Log")
