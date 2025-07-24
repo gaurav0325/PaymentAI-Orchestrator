@@ -197,7 +197,63 @@ elif page == "Application Log":
         st.info("No log file found. On Streamlit Cloud, logs are available via the cloud dashboard.")
 elif page == "Admin UI (Business Rules)":
     st.title("Business Rules Admin UI")
-    st.markdown(f"[Click here to open Admin UI in a new tab]({ADMIN_UI_URL})", unsafe_allow_html=True)
-    if st.button("Open Admin UI in new tab"):
-        js = f'''<script>window.open('{ADMIN_UI_URL}', '_blank')</script>'''
-        st.components.v1.html(js) 
+    st.write("Manage business rules below. All changes are logged.")
+    rules = load_business_rules()
+    # Display rules in a table with edit/delete buttons
+    for idx, rule in enumerate(rules):
+        with st.expander(f"{rule['id']}: {rule['description']}"):
+            st.json(rule)
+            col1, col2, col3 = st.columns([1,1,2])
+            with col1:
+                if st.button(f"Edit", key=f"edit_{idx}"):
+                    st.session_state['edit_rule'] = idx
+            with col2:
+                if st.button(f"Delete", key=f"delete_{idx}"):
+                    rules.pop(idx)
+                    from utils.helpers import save_business_rules
+                    save_business_rules(rules)
+                    log_event(f"Deleted business rule: {rule['id']}")
+                    st.success(f"Deleted rule {rule['id']}")
+                    st.experimental_rerun()
+    # Add or edit rule form
+    st.subheader("Add / Edit Business Rule")
+    def rule_form(default=None):
+        with st.form(key="rule_form"):
+            rule_id = st.text_input("Rule ID", value=default.get('id', '') if default else '')
+            description = st.text_input("Description", value=default.get('description', '') if default else '')
+            rule_type = st.selectbox("Type", ["block_payment"], index=0 if not default or default.get('type') == 'block_payment' else 0)
+            flight_from_country = st.text_input("Flight From Country", value=default.get('condition', {}).get('flight_from_country', '') if default else '')
+            block = st.checkbox("Block Payment?", value=default.get('action', {}).get('block', False) if default else False)
+            message = st.text_input("Block Message", value=default.get('action', {}).get('message', '') if default else '')
+            submitted = st.form_submit_button("Save Rule")
+            if submitted:
+                new_rule = {
+                    "id": rule_id,
+                    "description": description,
+                    "type": rule_type,
+                    "condition": {"flight_from_country": flight_from_country},
+                    "action": {"block": block, "message": message}
+                }
+                from utils.helpers import save_business_rules
+                if default:
+                    rules[st.session_state['edit_rule']] = new_rule
+                    log_event(f"Edited business rule: {rule_id}")
+                else:
+                    rules.append(new_rule)
+                    log_event(f"Added business rule: {rule_id}")
+                save_business_rules(rules)
+                st.success(f"Saved rule {rule_id}")
+                if 'edit_rule' in st.session_state:
+                    del st.session_state['edit_rule']
+                st.experimental_rerun()
+    # Edit mode
+    if 'edit_rule' in st.session_state:
+        rule_to_edit = rules[st.session_state['edit_rule']]
+        st.subheader(f"Edit Rule: {rule_to_edit['id']}")
+        rule_form(default=rule_to_edit)
+        if st.button("Cancel Edit"):
+            del st.session_state['edit_rule']
+            st.experimental_rerun()
+    else:
+        st.subheader("Add New Rule")
+        rule_form() 
