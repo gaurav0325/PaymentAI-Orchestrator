@@ -26,6 +26,8 @@ page = st.sidebar.radio(
     ["Home", "Project Summary", "Application Log", "Admin UI (Business Rules)"]
 )
 
+ADMIN_UI_URL = "https://multi-ai-agent-paymentmethods-offered-ga.streamlit.app/"
+
 if page == "Home":
     st.title("PaymentAI-Orchestrator: User Journey Demo")
     users = load_users()
@@ -176,12 +178,16 @@ elif page == "Project Summary":
     ''')
 elif page == "Application Log":
     st.title("Application Log")
-    st.info("This is a placeholder for application logs. On Streamlit Cloud, logs are available via the cloud dashboard.")
+    log_file = "app_log.txt"
+    if os.path.exists(log_file):
+        with open(log_file, "r") as f:
+            logs = f.read()
+        st.text_area("Application Log", logs, height=400)
+    else:
+        st.info("No log file found. On Streamlit Cloud, logs are available via the cloud dashboard.")
 elif page == "Admin UI (Business Rules)":
     st.title("Business Rules Admin UI")
-    ADMIN_PORT = 8508
-    st.markdown(f"[Click here to open Admin UI in a new tab](http://localhost:{ADMIN_PORT})")
-    if st.button(f"Launch Admin UI (port {ADMIN_PORT})"):
-        admin_path = os.path.join("frontend", "admin_rules.py")
-        subprocess.Popen([sys.executable, "-m", "streamlit", "run", admin_path, f"--server.port={ADMIN_PORT}"])
-        st.success(f"Launched Admin UI on port {ADMIN_PORT}. Open the link above in a new tab.") 
+    st.markdown(f"[Click here to open Admin UI in a new tab]({ADMIN_UI_URL})", unsafe_allow_html=True)
+    if st.button("Open Admin UI in new tab"):
+        js = f'''<script>window.open('{ADMIN_UI_URL}', '_blank')</script>'''
+        st.components.v1.html(js) 
