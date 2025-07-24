@@ -18,6 +18,14 @@ def load_users():
     with open(os.path.join(data_dir, 'sample_users.json'), 'r', encoding='utf-8') as f:
         return json.load(f)
 
+# Logging function for Application Log page
+def log_event(message):
+    try:
+        with open("app_log.txt", "a") as f:
+            f.write(message + "\n")
+    except Exception as e:
+        pass  # On Streamlit Cloud, file writes are ephemeral
+
 st.set_page_config(page_title="PaymentAI-Orchestrator Demo", layout="wide")
 
 # --- Sidebar Navigation ---
@@ -26,7 +34,8 @@ page = st.sidebar.radio(
     ["Home", "Project Summary", "Application Log", "Admin UI (Business Rules)"]
 )
 
-ADMIN_UI_URL = "https://multi-ai-agent-paymentmethods-offered-ga.streamlit.app/"
+# Use a placeholder admin subdomain for the admin UI
+ADMIN_UI_URL = "https://multi-ai-agent-paymentmethods-admin-ga.streamlit.app/"
 
 if page == "Home":
     st.title("PaymentAI-Orchestrator: User Journey Demo")
@@ -129,6 +138,7 @@ graph TD
             context=context,
             requested_action="invoke:ContextAgent"
         )
+        log_event(f"User ran orchestrator for user_id: {user['user_id']}")
         result, steps = run_orchestrator_with_steps(mcp)
         st.subheader("Orchestrator Output")
         st.json(result.context)
